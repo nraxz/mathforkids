@@ -1,0 +1,93 @@
+body {
+  background-color: #b6b6ff;
+  margin: 0 auto;
+  max-width: 1200px;
+    font-family: Effra, Calibri, Helvetica, Arial, sans-serif;
+}
+main {
+  padding: 2.5%;
+}
+
+button {
+  text-align: center;
+  margin: 0;
+  padding: 3%;
+  width: 12%;
+  border: none;
+  font-size: 3.5em;
+  font-family: Effra, Calibri, Helvetica, Arial, sans-serif;
+  background-color: rgb(168,109,147);
+  color: rgb(250,250,250); /* white */
+}
+
+button:hover {
+  background-color: rgb(117,41,90);
+}
+
+/* used to make font-smaller for the START and DONE-buttons */
+.half-size {
+  font-size: 1.75em;
+  padding-right: 1.5%;
+  padding-bottom: 1.5%;
+  padding-top: 1.5%;
+  padding-left: 0;
+}
+
+h1 {
+  margin: 0 auto;
+}
+
+textarea {
+  text-align: center;
+  /* font-size: 100px; */
+  font-size: 7em;
+  position: absolute;
+  top: 15%;
+  right: 35%;
+  height: 18%;
+  width: 15%;
+  border: none;
+  background-color: rgb(247,247,247);
+  padding: 2%;
+}
+
+.question {
+  text-align: center;
+  font-size: 3.5em;
+  position: absolute;
+  top: 45%;
+  right: 15%;
+  height: 18%;
+  width: 40%;
+  padding-bottom: 1%;
+  border: none;
+  background-color: #882D60;
+}
+
+.message {
+  text-transform: uppercase;
+  text-align: center;
+  position: absolute;
+  top: 68%;
+  right: 15%;
+  /* height: 22%; */
+  width: 40%;
+  font-size: 1.2em;
+  border: none;
+  background-color: #e6cf8b;
+}
+
+img {
+  position: absolute;
+  top: 10%;
+  right: 20%;
+  width: 10%;
+}
+/* works in normal browsers, not the ipad */
+footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding:1%;
+  font-size: small;
+}

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Maths Game for Kids</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  </head>
+
+  <body>
+    <main class="container mt-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="message">
+            <h1 id="victory-message">&nbsp;</h1>
+            <h1 id="points">Points: 0</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt-3">
+        <div class="card-body">
+          <div class="question">
+            <h1 id="question">?</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt-3">
+        <div class="card-body">
+            <div class="mt-3">
+                <textarea class="form-control" id="textbox"></textarea>
+            </div>
+          <div class="row mt-3">
+          
+            <div class="col">
+              <button type="button" class="btn btn-primary btn-block" onClick="controller.addDigit(7)">7</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-primary btn-block" onClick="controller.addDigit(8)">8</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-primary btn-block" onClick="controller.addDigit(9)">9</button>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col">
+              <button type="button" class="btn btn-primary btn-block" onClick="controller.addDigit(4)">4</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-primary btn-block" onClick="controller.addDigit(5)">5</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-primary btn-block" onClick="controller.addDigit(6)">6</button>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col">
+              <button type="button" class="btn btn-primary btn-block" onClick="controller.addDigit(1)">1</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-primary btn-block" onClick="controller.addDigit(2)">2</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-primary btn-block" onClick="controller.addDigit(3)">3</button>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col">
+              <button type="button" class="btn btn-primary btn-block" onClick="controller.addDigit(0)">0</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-success btn-block" onClick="controller.submitAnswer()">DONE</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-warning btn-block" onClick="controller.startGame(10)">START</button>
+            </div>
+          </div>
+
+         
+
+          
+        </div>
+      </div>
+    </main>
+
+    <script src="scripts/game.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

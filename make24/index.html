@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Make 24</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="deal.js"></script>
+    <script src="findSolutions.js"></script>
+    <script src="calc.js"></script>
+    <script src="undoReset.js"></script>
+    <style>
+        body {
+            background-image: url("felt.jpg");
+        }
+
+        #appName {
+            color: lightblue;
+            text-align: center;
+            font-size: 75px;
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+        }
+
+        label {
+            color: lightblue;
+            font-size: 20px;
+        }
+
+        label:hover {
+            cursor: pointer;
+        }
+
+        img {
+            position:relative;
+        }
+
+        img:hover {
+            cursor: pointer;
+        }
+
+        .cards {
+            transition: all 2s ease;
+        }
+
+        .rotated {
+            transform: rotate(1080deg);
+        }
+
+        input[type=radio]:checked{
+            color: lightblue
+        }
+
+        .radio-toolbar label {
+            color: lightblue;
+        }
+
+        .operator {
+            font-size: 60px;
+            color: lightblue;
+            padding: 30px;
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+        }
+
+        .operator:hover {
+            cursor: pointer;
+        }
+
+        .answer {
+            font-size: 30px;
+            color: lightblue;
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+        }
+
+        #showSolutionsDesc {
+            color: red;
+            font-size: 20px;
+        }
+
+        #showSolutionsDesc:hover {
+            cursor: pointer;
+        }
+
+        :fullscreen #appName {
+            display: none;
+        }
+
+        :-webkit-full-screen #appName {
+            display: none;
+        }
+
+        :-moz-full-screen #appName {
+            display: none;
+        }
+
+        :-ms-fullscreen #appName {
+            display: none;
+        }
+
+        button {
+            color: white;
+            background-color: black;
+            outline: 1px solid blue;
+            width: 150px;
+        }
+
+        button:hover {
+            background-color: green;
+        }
+
+        @-webkit-keyframes colorchange {
+            0% {
+                color: lightgreen;
+            }
+            10% {
+                color: yellow;
+            }
+            20% {
+                color: lightblue;
+            }
+            30% {
+                color: pink;
+            }
+            40% {
+                color: orange;
+            }
+            50% {
+                color: purple;
+            }
+            60% {
+                color: aqua;
+            }
+            70% {
+                color: greenyellow;
+            }
+            80% {
+                color: darkblue;
+            }
+            90% {
+                color: aquamarine;
+            }
+            100% {
+                color: blueviolet;
+            }
+        }
+
+    </style>
+    <script>
+        function toggleFS() {
+            var root = document.documentElement;
+            if (root.requestFullscreen) {
+                root.requestFullscreen();
+            } else if (root.mozRequestFullscreen) {
+                root.mozRequestFullscreen();
+            } else if (document.documentElement.webkitRequestFullscreen) {
+                root.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) {
+                root.msRequestFullscreen();
+            }
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullscreen) {
+                document.mozCancelFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+    </script>
+</head>
+
+
+<body>
+    <div class="container">
+        <input type="radio" class="difficulty" name="difficulty" id="random" value="random" checked />
+        <label for="random">Random</label>
+        <input type="radio" class="difficulty" name="difficulty" id="easy" value="easy" />
+        <label for="easy">Easy</label>
+        <input type="radio" class="difficulty" name="difficulty" id="medium" value="medium" />
+        <label for="medium">Medium</label>
+        <input type="radio" class="difficulty" name="difficulty" id="hard" value="hard" />
+        <label for="hard">Hard</label>
+        <button id="fsButton" onclick="toggleFS()" style="float:right; margin-right:30px">Fullscreen</button>
+        <br />
+        <a style="color:lightblue; float:right; margin-right:30px" href="solutionFinder.html">Solution Finder</a>
+    </div>
+    <h1 id="appName">Make 24</h1>
+    <br />
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-3">
+                <img id="card1Img" class="responsive cards" src="card_back.png" onclick="card1.click()"
+                     style="max-height:120px" />
+            </div>
+            <div class="col-xs-3">
+                <img id="card2Img" class="responsive cards" src="card_back.png" onclick="card2.click()"
+                     style="max-height:120px" />
+
+            </div>
+            <div class="col-xs-3">
+                <img id="card3Img" class="responsive cards" src="card_back.png" onclick="card3.click()"
+                     style="max-height:120px" />
+            </div>
+            <div class="col-xs-3">
+                <img id="card4Img" class="responsive cards" src="card_back.png" onclick="card4.click()"
+                     style="max-height:120px" />
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <span class="operator" id="plusBtn" onclick="plusClick()">+</span>
+        <span class="operator" id="minusBtn" onclick="minusClick()">-</span>
+        <span class="operator" id="multiplyBtn" onclick="multiplyClick()">x</span>
+        <span class="operator" id="divideBtn" onclick="divideClick()">/</span>
+    </div>
+    <div class="container">
+        <span class="answer" id="firstPick" style="margin-left: 40px"></span>
+        <span class="answer" id="oper1"></span>
+        <span class="answer" id="secondPick"></span>
+        <span class="answer" id="oper2"></span>
+        <span class="answer" id="thirdPick"></span>
+        <span class="answer" id="oper3"></span>
+        <span class="answer" id="fourthPick"></span>
+        <span class="answer" id="ans"></span>
+    </div>
+    <div class="container">
+        <button id="dealBtn" onclick="dealCards()">Deal</button>
+        <button id="resetBtn">Reset</button>
+        <button id="undoBtn" onclick="undo()">Undo</button>
+        <!--
+        <button id="hintBtn" onclick="showHint()">Hint</button>
+        -->
+    </div>
+    <div class="container">
+        <p id="result" style="font-size:40px"></p>
+        <p id="solution" style="display:none; color:lightblue; font-size:25px"></p>
+        <img src="thumbsDown.jpg" id="showSolutionsBtn" style="max-height:80px" />
+        <p id="showSolutionsDesc">I give up, tell me</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+/* Add a new CSS file for styling adjustments */
+
+#game-container {
+    max-width: 400px; /* Adjust the max-width as needed */
+    margin: auto;
+}
+
+.card-header {
+    background-color: #007bff; /* Bootstrap primary color */
+    color: #fff;
+}
+
+.card-body {
+    background-color: #f8f9fa; /* Bootstrap card body background color */
+}
+
+.card-footer {
+    background-color: #f8f9fa; /* Bootstrap card body background color */
+}
