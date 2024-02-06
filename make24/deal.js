@@ -42,43 +42,43 @@ function Card() {
     this.cardFace = function () {
         switch (this.value) {
             case 1:
-                return "card_1.png";
+                return "card_1.svg";
                 break;
             case 2:
-                return "card_2.png";
+                return "card_2.svg";
                 break;
             case 3:
-                return "card_3.png";
+                return "card_3.svg";
                 break;
             case 4:
-                return "card_4.png";
+                return "card_4.svg";
                 break;
             case 5:
-                return "card_5.png";
+                return "card_5.svg";
                 break;
             case 6:
-                return "card_6.png";
+                return "card_6.svg";
                 break;
             case 7:
-                return "card_7.png";
+                return "card_7.svg";
                 break;
             case 8:
-                return "card_8.png";
+                return "card_8.svg";
                 break;
             case 9:
-                return "card_9.png";
+                return "card_9.svg";
                 break;
             case 10:
-                return "card_10.png";
+                return "card_10.svg";
                 break;
             case 11:
-                return "card_11.png";
+                return "card_11.svg";
                 break;
             case 12:
-                return "card_12.png";
+                return "card_12.svg";
                 break;
             case 13:
-                return "card_13.png";
+                return "card_13.svg";
                 break;
         }
     }

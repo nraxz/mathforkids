@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Make 24</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -13,15 +12,12 @@
     <script src="calc.js"></script>
     <script src="undoReset.js"></script>
     <style>
-        body {
-            background-image: url("felt.jpg");
-        }
-
         #appName {
             color: lightblue;
             text-align: center;
             font-size: 75px;
             font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+            margin-bottom: 30px;
         }
 
         label {
@@ -62,9 +58,6 @@
             color: lightblue;
             padding: 30px;
             font-family: 'Comic Sans MS', 'Comic Sans', cursive;
-        }
-
-        .operator:hover {
             cursor: pointer;
         }
 
@@ -77,26 +70,7 @@
         #showSolutionsDesc {
             color: red;
             font-size: 20px;
-        }
-
-        #showSolutionsDesc:hover {
             cursor: pointer;
-        }
-
-        :fullscreen #appName {
-            display: none;
-        }
-
-        :-webkit-full-screen #appName {
-            display: none;
-        }
-
-        :-moz-full-screen #appName {
-            display: none;
-        }
-
-        :-ms-fullscreen #appName {
-            display: none;
         }
 
         button {
@@ -145,7 +119,6 @@
                 color: blueviolet;
             }
         }
-
     </style>
     <script>
         function toggleFS() {
@@ -183,12 +156,10 @@
         <label for="medium">Medium</label>
         <input type="radio" class="difficulty" name="difficulty" id="hard" value="hard" />
         <label for="hard">Hard</label>
-        <button id="fsButton" onclick="toggleFS()" style="float:right; margin-right:30px">Fullscreen</button>
-        <br />
-        <a style="color:lightblue; float:right; margin-right:30px" href="solutionFinder.html">Solution Finder</a>
+        <button id="fsButton" onclick="toggleFS()" class="btn btn-primary">Fullscreen</button>
+        <a href="solutionFinder.html" class="btn btn-info" style="float:right;">Solution Finder</a>
     </div>
     <h1 id="appName">Make 24</h1>
-    <br />
     <div class="container">
         <div class="row">
             <div class="col-xs-3">
@@ -227,9 +198,9 @@
         <span class="answer" id="ans"></span>
     </div>
     <div class="container">
-        <button id="dealBtn" onclick="dealCards()">Deal</button>
-        <button id="resetBtn">Reset</button>
-        <button id="undoBtn" onclick="undo()">Undo</button>
+        <button id="dealBtn" onclick="dealCards()" class="btn btn-success">Deal</button>
+        <button id="resetBtn" class="btn btn-danger">Reset</button>
+        <button id="undoBtn" onclick="undo()" class="btn btn-warning">Undo</button>
         <!--
         <button id="hintBtn" onclick="showHint()">Hint</button>
         -->
@@ -237,8 +208,8 @@
     <div class="container">
         <p id="result" style="font-size:40px"></p>
         <p id="solution" style="display:none; color:lightblue; font-size:25px"></p>
-        <img src="thumbsDown.jpg" id="showSolutionsBtn" style="max-height:80px" />
-        <p id="showSolutionsDesc">I give up, tell me</p>
+        <img src="help.png" id="showSolutionsBtn" style="max-height:80px" />
+        <p id="showSolutionsDesc">I give up, please help</p>
     </div>
 </body>
 </html>
