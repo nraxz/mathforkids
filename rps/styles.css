@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+:root {
+  --main-color: #0e5c9c;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: #dbdbdb;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.container {
+  background-color: white;
+  width: 600px;
+  max-width: 600px;
+  padding: 40px;
+  border-radius: 6px;
+  color: var(--main-color);
+}
+
+.container .result-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.container .result-container .result-move {
+  font-size: 130px;
+  text-align: center;
+}
+.container .result-container .user-result-element .result-move-icon {
+  transform: rotate(90deg);
+}
+.container .result-container .user-result-element .fa-hand-scissors {
+  transform: rotate3d(0, 1, 0, 180deg);
+}
+.container .result-container .computer-result-element .result-move-icon {
+  transform: rotate3d(1, 1, 0, 180deg);
+}
+.container .result-container .computer-result-element .fa-hand-scissors {
+  transform: none;
+}
+
+.container .game-status-element {
+  text-align: center;
+  font-weight: 600;
+  font-size: 30px;
+}
+
+
+.container .move-select-menu {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  justify-content: space-evenly;
+  margin-top: 40px;
+}
+
+.container .move {
+  text-align: center;
+  cursor: pointer;
+  color: var(--main-color);
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
+.container .move .select-move-icon {
+  font-size: 55px;
+}
+.container .move .move-select-name {
+  margin-top: 10px;
+  font-weight: 400;
+}
+
+
+.container .results-history {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.container .results-history .history {
+  font-size: 18px;
+}
+.container .results-history .history .history-element {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+
+.container .reset-btn {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  background-color: var(--main-color);
+  color: white;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

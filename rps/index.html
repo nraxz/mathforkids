@@ -1,0 +1,48 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>RPS</title>
+       
+  
+   
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="result-container">
+    <div class="user-result-element result-move">
+      <i class="fa-regular fa-hand-back-fist result-move-icon"></i>
+    </div>
+    <div class="computer-result-element result-move">
+      <i class="fa-regular fa-hand-back-fist result-move-icon"></i>
+    </div>
+  </div>
+
+  <p class="game-status-element">Let's Play!</p>
+
+  <div class="move-select-menu">
+    <button data-user-move="rock" class="rock-move move">
+      <i class="fa-regular fa-hand-back-fist select-move-icon"></i>
+      <p class="move-select-name">Rock</p>
+    </button>
+    <button data-user-move="paper" class="paper-move move">
+      <i class="fa-regular fa-hand select-move-icon"></i>
+      <p class="move-select-name">Paper</p>
+    </button>
+    <button data-user-move="scissors" class="scissors-move move">
+      <i class="fa-regular fa-hand-scissors select-move-icon"></i>
+      <p class="move-select-name">Scissors</p>
+    </button>
+  </div>
+
+  <div class="results-history">
+    <p class="winning-history history"><strong>Winnings: </strong> <span class="winnings-history-element history-element">0</span></p>
+    <p class="tie-history history"><strong>Ties: </strong> <span class="ties-history-element history-element">0</span></p>
+    <p class="lose-history history"><strong>Losses: </strong> <span class="losses-history-element history-element">0</span></p>
+  </div>
+
+  <button class="reset-btn">Reset</button>
+</div>
+<script src="script.js"></script>
