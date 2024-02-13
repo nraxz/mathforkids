@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
         answerButtons.forEach(answer => {
             const button = document.createElement('button');
             button.textContent = answer;
-            button.classList.add('btn', 'btn-primary', 'mr-2', 'mb-2');
+            button.classList.add('btn', 'btn-primary', 'btn-lg', 'mr-2', 'mb-2');
             button.addEventListener('click', () => checkAnswer(answer));
             buttonsContainer.appendChild(button);
         });

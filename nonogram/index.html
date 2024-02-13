@@ -1,0 +1,480 @@
+
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
+  <title>Nonograms</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  
+  
+<style>
+:root {
+  --cellSize: 25px;
+  --headerSize: 60px;
+  --col-bg: #004643;
+  --col-primary: #abd1c6;
+  --col-accent: #f9bc60;
+  --col-white: #fffffe;
+  --col-dark: #001e1d;
+  --tableBorder: 2px solid var(--col-dark);
+}
+
+p {
+  color: var(--col-dark);
+}
+
+.title {
+  color: var(--col-white);
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
+.explination {
+  color: var(--col-primary);
+  margin-bottom: 1rem;
+  max-width: 500px;
+  font-size: 13px;
+  text-align: center;
+  padding: 0 1rem;
+}
+.explination a {
+  color: var(--col-white);
+}
+
+#switcher {
+  font-weight: bold;
+  color: var(--col-accent);
+}
+#switcher.alt {
+  color: var(--col-dark);
+}
+
+#winState {
+  color: var(--col-dark);
+  font-weight: bold;
+}
+#winState.won {
+  content: "hello";
+  color: var(--col-accent);
+}
+
+body {
+  background: var(--col-bg);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  align-items: center;
+}
+.wrapper #nono {
+  min-height: 100px;
+  padding-top: 2rem;
+}
+.wrapper #nono table {
+  border-spacing: 0;
+}
+.wrapper #nono table tr:first-child th {
+  height: var(--headerSize);
+}
+.wrapper #nono table tr:first-child th .clues {
+  height: 100%;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+.wrapper #nono table tr th {
+  border-bottom: var(--tableBorder);
+  border-right: var(--tableBorder);
+}
+.wrapper #nono table tr th:first-child {
+  width: var(--headerSize);
+}
+.wrapper #nono table tr th:first-child .clues {
+  gap: 8px;
+  margin-bottom: 0;
+  margin-right: 8px;
+}
+.wrapper #nono table tr th .clues {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+}
+.wrapper #nono table tr th .clues p {
+  margin: 0;
+  color: var(--col-accent);
+}
+.wrapper #nono table tr td {
+  cursor: pointer;
+  width: var(--cellSize);
+  height: var(--cellSize);
+  border-bottom: var(--tableBorder);
+  border-right: var(--tableBorder);
+  transition: all 0.2s;
+}
+.wrapper #nono table tr td:hover {
+  background: var(--col-primary);
+}
+.wrapper #nono table tr td.rejected {
+  background: var(--col-dark);
+}
+.wrapper #nono table tr td.rejected:hover {
+  opacity: 0.5;
+}
+.wrapper #nono table tr td.toggled {
+  background: var(--col-accent);
+}
+.wrapper #nono table tr td.toggled:hover {
+  opacity: 0.5;
+}
+
+.generateContainer {
+  display: flex;
+  align-items: center;
+}
+.generateContainer #gridSize {
+  font-weight: bold;
+  color: var(--col-primary);
+  font-size: 1.5rem;
+  margin-left: 8px;
+  margin-right: 16px;
+}
+
+button {
+  background: var(--col-primary);
+  outline: none;
+  border: none;
+  padding: 4px 10px;
+  color: var(--col-dark);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#mute {
+  position: fixed;
+  right: 8px;
+  bottom: 8px;
+}
+
+.slider {
+  -webkit-appearance: none;
+  height: 15px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: #04aa6d;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  background: #04aa6d;
+  cursor: pointer;
+}
+</style>
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+</head>
+
+<body translate="no">
+  <div class="wrapper">
+  <h1 class="title"> Nonogram </h1>
+  <button id="mute" onclick="handleMute(this)">mute</button>
+  <p class="explination">A <a href="https://en.wikipedia.org/wiki/Nonogram" target="_blank"> nonogram </a> is a puzzle that challenges you to fill in squares on a grid based on numeric clues. Each row and column has a sequence of numbers indicating the lengths of continuous lines of filled squares in it. Your task is to deduce which squares are filled by logically combining these clues.
+    <br /><br />
+    (Click the top left O/X to toggle between selection and rejection mode)
+  </p>
+  <div id="nono"></div>
+  <p> Puzzle: <span id="winState">unsolved</span>
+  </p>
+  <div class="generateContainer">
+    <input type="range" class="slider" min="1" max="10" value="4" step="1" oninput="handleSizeChange(this.value)" />
+    <p id="gridSize">4</p>
+    <button onclick="handleGen()"> new Puzzle </button>
+  </div>
+</div>
+  
+      <script id="rendered-js" >
+let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+let gridSize = 4;
+let nextSize = 4;
+let wonCurrent = false;
+let currentNono = [[]];
+let vClues = [[]];
+let hClues = [[]];
+let muted = false;
+let markAsActive = true;
+
+const generateNono = () => {
+  let nextNono = [];
+  for (let x = 0; x < gridSize; x++) {if (window.CP.shouldStopExecution(0)) break;
+    const newRow = [];
+    for (let y = 0; y < gridSize; y++) {if (window.CP.shouldStopExecution(1)) break;
+      newRow.push({ value: Math.random() > 0.5 ? 1 : 0, guess: 0 });
+    }window.CP.exitedLoop(1);
+    nextNono.push(newRow);
+  }window.CP.exitedLoop(0);
+  currentNono = nextNono;
+  populateClues();
+};
+
+const getNonogramClueFromArray = arr => {
+  let clues = [],
+  count = 0;
+  for (let i = 0; i < arr.length; i++) {if (window.CP.shouldStopExecution(2)) break;
+    if (arr[i] === 1) {
+      count++;
+    } else if (count > 0) {
+      clues.push(count);
+      count = 0;
+    }
+  }
+  //make sure we add final clue
+  window.CP.exitedLoop(2);if (count > 0) {
+    clues.push(count);
+  }
+
+  return clues;
+};
+
+//returns the clues given a col index
+const calculateVerticalClues = index => {
+  const col = currentNono.reduce((acc, row) => {
+    acc.push(row[index].value);
+
+    return acc;
+  }, []);
+  return getNonogramClueFromArray(col);
+};
+
+//returns the clues given a row index
+const calculateHorizontalClues = index => {
+  const row = currentNono[index].map(n => n.value);
+  return getNonogramClueFromArray(row);
+};
+
+const populateClues = () => {
+  hClues = [];
+  vClues = [];
+  for (let n = 0; n < gridSize; n++) {if (window.CP.shouldStopExecution(3)) break;
+    hClues.push(calculateHorizontalClues(n));
+    vClues.push(calculateVerticalClues(n));
+  }window.CP.exitedLoop(3);
+};
+
+//builds a th element with given clues
+const constructClueHeader = clues => {
+  const header = document.createElement("th");
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("clues");
+  clues.forEach(clue => {
+    const clueElement = document.createElement("p");
+    clueElement.innerText = clue;
+    wrapper.append(clueElement);
+  });
+  header.append(wrapper);
+  return header;
+};
+
+const getCellClickHandler = (row, col) => {
+  return async event => {
+    if (!wonCurrent) {
+      if (markAsActive) {
+        if (!event.target.classList.contains("rejected")) {
+          currentNono[row][col].guess = 1 - currentNono[row][col].guess;
+          playSound(currentNono[row][col].guess == 1 ? 600 : 400, 0.1);
+
+          event.target.classList.toggle("toggled");
+          if (hasWon()) {
+            wonCurrent = true;
+            document.getElementById("winState").classList.add("won");
+            document.getElementById("winState").innerText = "solved!";
+            await getTimeoutPromise(600);
+            playVictory();
+          }
+        }
+      } else {
+        if (!event.target.classList.contains("toggled")) {
+          playSound(500, 0.1);
+          event.target.classList.toggle("rejected");
+        }
+      }
+    }
+  };
+};
+
+const arraysMatch = (a1, a2) => {
+  if (a1.length != a2.length) return false;
+  for (let n = 0; n < a1; n++) {if (window.CP.shouldStopExecution(4)) break;
+    if (a1[n] != a1[n]) return false;
+  }window.CP.exitedLoop(4);
+  return true;
+};
+
+const hasWon = () => {
+  //We need to check the guessed grid satisfies the clues
+  for (let n = 0; n < gridSize; n++) {if (window.CP.shouldStopExecution(5)) break;
+    //horiziontally
+    const row = currentNono[n].map(i => i.guess);
+    const equivRowClue = getNonogramClueFromArray(row);
+    if (!arraysMatch(equivRowClue, hClues[n])) {
+      return false;
+    }
+    //vertically
+    const col = currentNono.reduce((acc, row) => {
+      acc.push(row[n].guess);
+      return acc;
+    }, []);
+    const equivColClue = getNonogramClueFromArray(col);
+    if (!arraysMatch(equivColClue, vClues[n])) {
+      return false;
+    }
+  }window.CP.exitedLoop(5);
+  return true;
+};
+
+const constructFirstRow = () => {
+  const row = document.createElement("tr");
+  const switcher = document.createElement("th");
+  switcher.innerText = markAsActive ? "O" : "X";
+  switcher.id = "switcher";
+  switcher.addEventListener("click", () => {
+    markAsActive = !markAsActive;
+    switcher.classList.toggle("alt");
+    switcher.innerText = markAsActive ? "O" : "X";
+  });
+  row.append(switcher);
+  vClues.forEach(clues => {
+    row.append(constructClueHeader(clues));
+  });
+
+  return row;
+};
+
+const constructRegularRow = rowIndex => {
+  const row = document.createElement("tr");
+  row.append(constructClueHeader(hClues[rowIndex]));
+  for (let x = 0; x < gridSize; x++) {if (window.CP.shouldStopExecution(6)) break;
+    const cell = document.createElement("td");
+    cell.addEventListener("click", getCellClickHandler(rowIndex, x));
+    row.append(cell);
+  }window.CP.exitedLoop(6);
+  return row;
+};
+
+const constructHTMLNono = () => {
+  const table = document.createElement("table");
+  //Create the firs row (just clues)
+  table.append(constructFirstRow());
+  for (let y = 0; y < gridSize; y++) {if (window.CP.shouldStopExecution(7)) break;
+    table.append(constructRegularRow(y));
+  }window.CP.exitedLoop(7);
+  const nono = document.getElementById("nono");
+  nono.innerHTML = "";
+  nono.append(table);
+};
+
+const getTimeoutPromise = millis => {
+  return new Promise(res => {
+    setTimeout(res, millis);
+  });
+};
+
+const playSound = (freq, dur = 0.1) => {
+  if (muted) return;
+  let oscillator = audioContext.createOscillator();
+  let gainNode = audioContext.createGain();
+
+  oscillator.type = "sine";
+  oscillator.frequency.setValueAtTime(freq || 440, audioContext.currentTime);
+  oscillator.connect(gainNode);
+  gainNode.gain.value = 0.07;
+  gainNode.connect(audioContext.destination);
+  oscillator.start();
+  oscillator.stop(audioContext.currentTime + dur);
+  return getTimeoutPromise(dur * 1000);
+};
+
+const playVictory = async () => {
+  const C = 261.63,
+  E = 329.63,
+  G = 392.0,
+  C_high = 523.25;
+  const duration = 0.14; // Duration for each note in milliseconds
+  const pauseDur = 10;
+  await playSound(C, duration);
+  await getTimeoutPromise(pauseDur);
+
+  await playSound(E, duration);
+  await getTimeoutPromise(pauseDur);
+
+  await playSound(G, duration);
+  await getTimeoutPromise(pauseDur);
+
+  await playSound(C_high, duration);
+  await getTimeoutPromise(pauseDur);
+
+  await playSound(G, duration);
+  await getTimeoutPromise(pauseDur);
+
+  await playSound(C_high, duration * 4);
+  await getTimeoutPromise(pauseDur);
+};
+
+const handleSizeChange = newVal => {
+  nextSize = newVal;
+  document.getElementById("gridSize").innerText = nextSize;
+};
+
+const handleGen = () => {
+  gridSize = nextSize;
+  buildNono();
+  wonCurrent = false;
+  document.getElementById("winState").classList.remove("won");
+  document.getElementById("winState").innerText = "unsolved";
+};
+
+const handleMute = e => {
+  muted = !muted;
+  e.innerText = muted ? "unmute" : "mute";
+};
+
+const buildNono = () => {
+  generateNono();
+  constructHTMLNono();
+  currentNono.forEach(row => {
+    console.log(row.map(c => c.value));
+  });
+};
+
+buildNono();
+//# sourceURL=pen.js
+    </script>
+
+  
+</body>
+
+</html>
